@@ -8,7 +8,7 @@ env:
     KBC_DEVELOPERPORTAL_APP: keboola.ex-facebook
     KBC_DEVELOPERPORTAL_USERNAME: keboola+facebook_extractor_github_actions_oj
     KBC_DEVELOPERPORTAL_PASSWORD: '${{ secrets.KBC_DEVELOPERPORTAL_PASSWORD }}'
-    DOCKERHUB_USER: ''
+    DOCKERHUB_USER: 'keboolabot'
     DOCKERHUB_TOKEN: '${{ secrets.DOCKERHUB_TOKEN }}'
     KBC_STORAGE_TOKEN: '${{ secrets.KBC_STORAGE_TOKEN }}'
     KBC_TEST_PROJECT_URL: ''
