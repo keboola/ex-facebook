@@ -2,9 +2,11 @@
 
 declare(strict_types=1);
 
+namespace Keboola\FacebookExtractor;
+
 use Keboola\Component\Logger;
 use Keboola\Component\UserException;
-use MyComponent\Component;
+use Throwable;
 
 require __DIR__ . '/../vendor/autoload.php';
 

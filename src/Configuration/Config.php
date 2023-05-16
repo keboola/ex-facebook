@@ -2,13 +2,14 @@
 
 declare(strict_types=1);
 
-namespace MyComponent;
+namespace Keboola\FacebookExtractor\Configuration;
 
 use Keboola\Component\Config\BaseConfig;
 
 class Config extends BaseConfig
 {
-    // @todo implement your custom getters
+    public const GRAPH_VERSION = '15.0';
+
     public function getFoo(): string
     {
         return $this->getStringValue(['parameters', 'foo']);
