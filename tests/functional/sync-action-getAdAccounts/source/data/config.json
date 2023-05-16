@@ -1,0 +1,13 @@
+{
+  "action": "adaccounts",
+  "parameters": {},
+  "authorization": {
+    "oauth_api": {
+      "credentials": {
+        "appKey": "%env(string:APP_KEY_ADS)%",
+        "#appSecret": "%env(string:APP_SECRET_ADS)%",
+        "#data": "%env(string:CREDENTIALS_DATA_ADS)%"
+      }
+    }
+  }
+}

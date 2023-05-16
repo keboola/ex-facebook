@@ -1,0 +1,13 @@
+{
+  "action": "accounts",
+  "parameters": {},
+  "authorization": {
+    "oauth_api": {
+      "credentials": {
+        "appKey": "%env(string:APP_KEY_PAGES)%",
+        "#appSecret": "%env(string:APP_SECRET_PAGES)%",
+        "#data": "%env(string:CREDENTIALS_DATA_PAGES)%"
+      }
+    }
+  }
+}

@@ -5,3 +5,10 @@ services:
     volumes:
       - ./:/code
       - ./data:/data
+    environment:
+      - APP_KEY_PAGES
+      - APP_KEY_ADS
+      - APP_SECRET_PAGES
+      - APP_SECRET_ADS
+      - CREDENTIALS_DATA_PAGES
+      - CREDENTIALS_DATA_ADS
