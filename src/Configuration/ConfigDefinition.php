@@ -55,7 +55,7 @@ class ConfigDefinition extends BaseConfigDefinition
                         ->children()->end()
                     ->end()
                 ->end()
-                ->enumNode('api-version')
+                ->enumNode('api_version')
                     ->cannotBeEmpty()
                     ->values([
                         '10.0',
