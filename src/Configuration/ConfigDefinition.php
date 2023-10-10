@@ -26,6 +26,7 @@ class ConfigDefinition extends BaseConfigDefinition
                         ->isRequired()
                         ->children()
                             ->arrayNode('credentials')
+                                ->ignoreExtraKeys(false)
                                 ->isRequired()
                                 ->children()
                                     ->scalarNode('appKey')->isRequired()->cannotBeEmpty()->end()
