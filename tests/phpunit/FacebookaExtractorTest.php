@@ -10,6 +10,7 @@ use FacebookAds\Http\Response;
 use Keboola\FacebookExtractor\FacebookExtractor;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\NullLogger;
 
 class FacebookaExtractorTest extends TestCase
 {
@@ -43,7 +44,7 @@ class FacebookaExtractorTest extends TestCase
             ->method('execute')
             ->willReturnOnConsecutiveCalls($responsePageMock, $responseAdMock, $responseIgMock);
 
-        $extractor = new FacebookExtractor($apiMock);
+        $extractor = new FacebookExtractor($apiMock, new NullLogger());
 
         $responsePage = $extractor->getAccounts('/me/accounts');
         $responseAd = $extractor->getAccounts('/me/adaccounts', 'account_id,id,business_name,name,currency');

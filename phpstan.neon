@@ -1,8 +1,5 @@
 parameters:
     checkMissingIterableValueType: false
     ignoreErrors:
+        - '#Cannot call method scalarNode\(\) on Symfony\\Component\\Config\\Definition\\Builder\\NodeParentInterface\|null.#'
         - '#Cannot call method end\(\) on Symfony\\Component\\Config\\Definition\\Builder\\NodeParentInterface\|null.#'
-        -
-            message: "#^Cannot cast mixed to string\\.$#"
-            count: 1
-            path: src/Component.php
