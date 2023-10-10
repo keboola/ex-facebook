@@ -29,6 +29,7 @@ class OutputWriter
 
     private const PRIMARY_KEYS = [
         'id',
+        'parent_id',
         'key1',
         'key2',
         'end_time',
@@ -49,7 +50,7 @@ class OutputWriter
     {
         foreach ($data as $tableName => $tableData) {
             /** @var string[] $columns */
-            $columns = array_keys(current($tableData));
+            $columns = array_keys($this->sortRow(current($tableData)));
             if ($this->skipTable($columns)) {
                 continue;
             }
