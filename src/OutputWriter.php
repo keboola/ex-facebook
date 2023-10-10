@@ -50,7 +50,7 @@ class OutputWriter
     {
         foreach ($data as $tableName => $tableData) {
             /** @var string[] $columns */
-            $columns = array_keys($this->sortRow(current($tableData)));
+            $columns = $this->sortColumns($this->getColumnsFromData($tableData));
             if ($this->skipTable($columns)) {
                 continue;
             }
@@ -64,24 +64,26 @@ class OutputWriter
             $this->manifestManager->writeTableManifest($tableName . '.csv', $outTableManifestOptions);
 
             foreach ($tableData as $tableRow) {
-                $row = $this->sortRow($tableRow);
+                $row = [];
+                foreach ($columns as $column) {
+                    $row[$column] = $tableRow[$column] ?? null;
+                }
                 $table->writeRow($row);
             }
         }
     }
 
-    private function sortRow(array $row): array
+    private function sortColumns(array $columns): array
     {
-        $sortedRow = [];
+        $sortedColumns = [];
         foreach (self::ORDER_COLUMNS as $column) {
-            if (!array_key_exists($column, $row)) {
+            if (!in_array($column, $columns)) {
                 continue;
             }
-            $sortedRow[$column] = $row[$column] ?? null;
-            unset($row[$column]);
+            $sortedColumns[] = $column;
         }
 
-        return array_merge($sortedRow, $row);
+        return array_merge($sortedColumns, array_diff($columns, $sortedColumns));
     }
 
     private function getPrimarKeys(array $arrayKeys): array
@@ -101,5 +103,17 @@ class OutputWriter
         // unset system tables
         $diff = array_diff($columns, ['ex_account_id', 'fb_graph_node', 'parent_id', 'id']);
         return empty($diff);
+    }
+
+    private function getColumnsFromData(array $tableData): array
+    {
+        $columns = [];
+        foreach ($tableData as $row) {
+            $rowColumns = array_keys($row);
+            $diffColumns = array_diff($rowColumns, $columns);
+            $columns = array_merge($columns, $diffColumns);
+        }
+
+        return $columns;
     }
 }
