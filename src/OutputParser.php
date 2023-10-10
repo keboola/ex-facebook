@@ -53,6 +53,7 @@ class OutputParser
 
     public function parseRow(array $response, string $fbGraphNode, string $parentId, ?string $tableName = null): array
     {
+        $response = $response['insights'] ?? $response;
         $data = $response['data'] ?? [];
 
         $rowData = [];
@@ -67,12 +68,12 @@ class OutputParser
             array_walk($row, function ($value, $key) use (&$tableData, &$flatenData) {
                 if (is_array($value) && array_key_exists('data', $value)) {
                     $flatenData['new_table'][(string) $key] = $value;
+                } elseif ($key === 'values') {
+                    $flatenData['values'] = $value;
                 } elseif (is_array($value)) {
                     $tableData = array_merge($tableData, $this->flattenArray($key, $value));
                 } elseif (in_array($key, self::ADS_ACTION_STATS_ROW)) {
                     $flatenData['ads_actions'][$key] = $value;
-                } elseif ($key === 'values') {
-                    $flatenData['values'][$key] = $value;
                 } elseif (in_array($key, self::SERIALIZED_LISTS_TYPES)) {
                     $tableData[$key] = json_encode($value);
                 } else {
@@ -81,10 +82,13 @@ class OutputParser
             });
 
             if (array_key_exists('values', $flatenData)) {
-                $tableData = $this->parseValues($tableData, $flatenData['values']);
+                foreach ($this->parseValues($tableData, $flatenData['values']) as $valueRow) {
+                    $rowData[$mainTableName][] = $valueRow;
+                }
+            } else {
+                $rowData[$mainTableName][] = $tableData;
             }
 
-            $rowData[$mainTableName][] = $tableData;
             if (array_key_exists('new_table', $flatenData)) {
                 foreach ($flatenData['new_table'] as $newTableName => $table) {
                     $rowData = array_merge_recursive(
@@ -103,8 +107,7 @@ class OutputParser
                 }
             }
         }
-
-        if (isset($response['paging']['next']) && isset($response['paging']['cursors']['after'])) {
+        if (isset($response['paging']['next'])) {
             $nextPageResponse = $this->pageLoader->loadPageFromUrl($response['paging']['next']);
 
             $rowData = array_merge_recursive(
@@ -121,19 +124,24 @@ class OutputParser
         return $rowData;
     }
 
-    private function parseValues(array $mainTable, array $values): array
+    private function parseValues(array $tableData, array $values): array
     {
-        $mainTable['key1'] = '';
-        $mainTable['key2'] = '';
+        $rows = [];
+        foreach ($values as $value) {
+            $row = $tableData;
+            $row['key1'] = '';
+            $row['key2'] = '';
 
-        if (array_key_exists('value', $values)) {
-            $mainTable['value'] = $values['value'];
-        }
-        if (array_key_exists('end_time', $values)) {
-            $mainTable['end_time'] = $values['end_time'];
+            if (array_key_exists('value', $value)) {
+                $row['value'] = $value['value'];
+            }
+            if (array_key_exists('end_time', $value)) {
+                $row['end_time'] = $value['end_time'];
+            }
+            $rows[] = $row;
         }
 
-        return $mainTable;
+        return $rows;
     }
 
     private function flattenArray(string $parentKey, array $values): array
@@ -155,6 +163,9 @@ class OutputParser
         $pattern = sprintf('/_%s$/', $tableName);
         $match = preg_match($pattern, $this->row->getName());
         if ($this->row->getName() === $tableName || $match === 1) {
+            return $this->row->getName();
+        }
+        if (empty($tableName)) {
             return $this->row->getName();
         }
         return sprintf('%s_%s', $this->row->getName(), $tableName);

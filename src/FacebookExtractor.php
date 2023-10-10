@@ -60,7 +60,7 @@ class FacebookExtractor
             $fbGraphNode = sprintf(
                 '%s%s',
                 !$isPageToken ? : 'page_',
-                $row->getQuery()->getPath(),
+                $isPageToken && !$row->getQuery()->hasPath() ? 'insights' : $row->getQuery()->getPath(),
             );
             $page = $pageLoader->loadPage(
                 $row->getQuery(),
