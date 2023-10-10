@@ -20,9 +20,11 @@ class ConfigDefinition extends BaseConfigDefinition
         $rootNode
             ->children()
             ->arrayNode('authorization')
+                ->ignoreExtraKeys(false)
                 ->isRequired()
                 ->children()
                     ->arrayNode('oauth_api')
+                        ->ignoreExtraKeys(false)
                         ->isRequired()
                         ->children()
                             ->arrayNode('credentials')
