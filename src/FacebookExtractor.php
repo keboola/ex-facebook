@@ -130,9 +130,6 @@ class FacebookExtractor
 
     private function requestRequirePageToken(QueryConfig $queryConfig): bool
     {
-        if (!$queryConfig->hasPath() || !$queryConfig->hasFields()) {
-            return false;
-        }
         $checkPath = in_array($queryConfig->getPath(), ['insights', 'feed', 'posts', 'ratings', 'likes']);
         $fields = (string) $queryConfig->getFields();
 
