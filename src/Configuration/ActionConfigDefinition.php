@@ -15,6 +15,7 @@ class ActionConfigDefinition extends BaseConfigDefinition
         // @formatter:off
         /** @noinspection NullPointerExceptionInspection */
         $parametersNode
+            ->ignoreExtraKeys()
             ->children()
                 ->enumNode('api_version')
                     ->cannotBeEmpty()
