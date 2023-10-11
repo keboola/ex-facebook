@@ -77,7 +77,7 @@ class OutputWriter
             $this->logger->info(sprintf(
                 'Total written %s rows to table %s',
                 count($tableData),
-                $tableName
+                $tableName,
             ));
         }
     }

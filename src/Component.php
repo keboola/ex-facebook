@@ -23,7 +23,7 @@ class Component extends BaseComponent
         $outputWriter = new OutputWriter(
             $this->getManifestManager(),
             $this->getLogger(),
-            $this->getDataDir() . '/out/tables'
+            $this->getDataDir() . '/out/tables',
         );
         $accountData = [];
         foreach ($this->getConfig()->getAccounts() as $account) {
