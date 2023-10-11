@@ -16,8 +16,12 @@ class PageLoader
 {
     private const TYPE_ASYNC_REQUEST = 'async-insights-query';
 
-    public function __construct(readonly Api $api, readonly LoggerInterface $logger, readonly string $type)
-    {
+    public function __construct(
+        readonly Api $api,
+        readonly LoggerInterface $logger,
+        readonly string $type,
+        readonly string $limit,
+    ) {
     }
 
     public function loadPage(
@@ -34,6 +38,7 @@ class PageLoader
             $params = [
                 'ids' => $pageId,
                 'fields' => $query->getFields(),
+                'limit' => $this->limit,
             ];
             $request = $this->api->prepareRequest(
                 '/'. $query->getPath(),

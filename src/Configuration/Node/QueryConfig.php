@@ -6,11 +6,14 @@ namespace Keboola\FacebookExtractor\Configuration\Node;
 
 class QueryConfig
 {
+    private const DEFAULT_LIMIT = '25';
+
     public function __construct(
         readonly private ?string $path,
         readonly private ?string $fields,
         readonly private ?string $parameters,
         readonly private ?string $ids,
+        readonly private ?string $limit,
         readonly private ?string $since,
         readonly private ?string $until,
     ) {
@@ -23,6 +26,7 @@ class QueryConfig
             $query['fields'] ?? null,
             $query['parameters'] ?? null,
             $query['ids'] ?? null,
+            $query['limit'] ?? null,
             $query['since'] ?? null,
             $query['until'] ?? null,
         );
@@ -56,6 +60,11 @@ class QueryConfig
     public function getIds(): ?string
     {
         return $this->ids;
+    }
+
+    public function getLimit(): string
+    {
+        return $this->limit ?? self::DEFAULT_LIMIT;
     }
 
     public function getSince(): ?string

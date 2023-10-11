@@ -51,7 +51,7 @@ class FacebookExtractor
                 false,
             );
 
-            $pageLoader = new PageLoader($api, $this->logger, $row->getType());
+            $pageLoader = new PageLoader($api, $this->logger, $row->getType(), $row->getQuery()->getLimit());
             $outputParser = new OutputParser(
                 $pageLoader,
                 $pageId,
