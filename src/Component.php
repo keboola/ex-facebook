@@ -5,7 +5,10 @@ declare(strict_types=1);
 namespace Keboola\FacebookExtractor;
 
 use FacebookAds\Api;
+use FacebookAds\Http\Exception\AuthorizationException;
+use FacebookAds\Http\Exception\RequestException;
 use Keboola\Component\BaseComponent;
+use Keboola\Component\UserException;
 use Keboola\FacebookExtractor\Configuration\ActionConfigDefinition;
 use Keboola\FacebookExtractor\Configuration\Config;
 use Keboola\FacebookExtractor\Configuration\ConfigDefinition;
@@ -23,11 +26,15 @@ class Component extends BaseComponent
             $accountData[] = $account->toArray();
         }
         $outputWriter->write(['accounts' => $accountData]);
-        /** @var RowConfig $row */
-        foreach ($this->getConfig()->getRows() as $row) {
-            foreach ($extractor->exportRow($this->getConfig()->getAccounts(), $row) as $parsedData) {
-                $outputWriter->write((array) $parsedData);
+        try {
+            /** @var RowConfig $row */
+            foreach ($this->getConfig()->getRows() as $row) {
+                foreach ($extractor->exportRow($this->getConfig()->getAccounts(), $row) as $parsedData) {
+                    $outputWriter->write((array) $parsedData);
+                }
             }
+        } catch (AuthorizationException|RequestException $e) {
+            throw new UserException($e->getMessage(), $e->getCode(), $e);
         }
     }
 
