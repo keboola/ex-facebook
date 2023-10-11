@@ -7,6 +7,7 @@ namespace Keboola\FacebookExtractor;
 use Keboola\Component\Manifest\ManifestManager;
 use Keboola\Component\Manifest\ManifestManager\Options\OutTableManifestOptions;
 use Keboola\Csv\CsvWriter;
+use Psr\Log\LoggerInterface;
 
 class OutputWriter
 {
@@ -42,8 +43,11 @@ class OutputWriter
         'action_reaction',
     ];
 
-    public function __construct(readonly ManifestManager $manifestManager, readonly string $outputDir)
-    {
+    public function __construct(
+        readonly ManifestManager $manifestManager,
+        readonly LoggerInterface $logger,
+        readonly string $outputDir,
+    ) {
     }
 
     public function write(array $data): void
@@ -70,6 +74,11 @@ class OutputWriter
                 }
                 $table->writeRow($row);
             }
+            $this->logger->info(sprintf(
+                'Total written %s rows to table %s',
+                count($tableData),
+                $tableName
+            ));
         }
     }
 

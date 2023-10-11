@@ -41,9 +41,13 @@ class FacebookExtractor
         }
 
         foreach ($pageTokens as $pageId => $token) {
-            /** @var ?string $pageId */
-            $pageId = $pageId === 'userToken' ? null : (string) $pageId;
+            $pageId = (string) $pageId;
 
+            $this->logger->info(sprintf(
+                'Using %s access token to retrieve data for %s',
+                $isPageToken ? 'page' :  'user',
+                $pageId,
+            ));
             $api = Api::init(
                 $apiSession->getAppId(),
                 $apiSession->getAppSecret(),
@@ -70,7 +74,7 @@ class FacebookExtractor
             if (empty($page)) {
                 continue;
             }
-            yield $outputParser->parseRow(current($page), $fbGraphNode, $pageId ?? 'asd');
+            yield $outputParser->parseRow(current($page), $fbGraphNode, $pageId);
         }
     }
 
