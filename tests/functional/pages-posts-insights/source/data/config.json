@@ -1,0 +1,48 @@
+{
+  "parameters": {
+    "accounts": {
+      "133353749860945": {
+        "category": "Information technology company",
+        "category_list": [
+          {
+            "id": "1130035050388269",
+            "name": "Information technology company"
+          }
+        ],
+        "name": "Test extractor page",
+        "id": "133353749860945",
+        "tasks": [
+          "ADVERTISE",
+          "ANALYZE",
+          "CREATE_CONTENT",
+          "MESSAGING",
+          "MODERATE",
+          "MANAGE"
+        ]
+      }
+    },
+    "api-version": "v16.0",
+    "queries": [
+      {
+        "id": 54577,
+        "type": "nested-query",
+        "name": "posts_insights",
+        "query": {
+          "path": "feed",
+          "fields": "insights.since(now).metric(post_negative_feedback, post_engaged_users, post_consumptions, post_impressions_fan, post_impressions_paid, post_impressions, page_posts_impressions_organic, page_posts_impressions_paid, page_posts_impressions)",
+          "limit": "25",
+          "ids": ""
+        }
+      }
+    ]
+  },
+  "authorization": {
+    "oauth_api": {
+      "credentials": {
+        "appKey": "%env(string:APP_KEY_PAGES)%",
+        "#appSecret": "%env(string:APP_SECRET_PAGES)%",
+        "#data": "%env(string:CREDENTIALS_DATA_PAGES)%"
+      }
+    }
+  }
+}

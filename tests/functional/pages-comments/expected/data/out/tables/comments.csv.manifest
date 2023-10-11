@@ -1,0 +1,1 @@
+{"primary_key":["id","parent_id"],"columns":["id","ex_account_id","fb_graph_node","parent_id","message","created_time","from_name","from_id"]}
