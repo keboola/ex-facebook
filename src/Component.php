@@ -92,7 +92,7 @@ class Component extends BaseComponent
             $oauthData['token'],
             false,
         );
-        $api->setDefaultGraphVersion($this->getConfig()->getApiVersion());
+        $api->setDefaultGraphVersion(substr($this->getConfig()->getApiVersion(), 1));
 
         return $api;
     }
