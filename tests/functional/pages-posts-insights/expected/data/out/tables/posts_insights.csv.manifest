@@ -1,0 +1,1 @@
+{"primary_key":["id","parent_id","key1","key2"],"columns":["id","ex_account_id","fb_graph_node","parent_id","name","key1","key2","value","period","title","description"]}

@@ -4,6 +4,8 @@
     "license": "MIT",
     "require": {
         "php": "^8.1",
+        "facebook/php-business-sdk": "^16.0",
+        "keboola/csv": "^4.0",
         "keboola/php-component": "^9.0"
     },
     "require-dev": {
@@ -17,13 +19,13 @@
     },
     "autoload": {
         "psr-4": {
-            "MyComponent\\": "src/"
+            "Keboola\\FacebookExtractor\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "MyComponent\\Tests\\": "tests/phpunit/",
-            "MyComponent\\FunctionalTests\\": "tests/functional/"
+            "Keboola\\FacebookExtractor\\Tests\\": "tests/phpunit/",
+            "Keboola\\FacebookExtractor\\FunctionalTests\\": "tests/functional/"
         }
     },
     "scripts": {

@@ -1,0 +1,7 @@
+Use API version v16.0
+Writing account table
+Total written 1 rows to table accounts
+Query "posts_insights" started. Type: "nested-query", Fields: "insights.since(now).metric(post_negative_feedback, post_engaged_users, post_consumptions, post_impressions_fan, post_impressions_paid, post_impressions, page_posts_impressions_organic, page_posts_impressions_paid, page_posts_impressions)", Limit: "25", Path: "feed"
+Using page access token to retrieve data for 133353749860945
+Total written 10 rows to table posts_insights
+Query "posts_insights" finished

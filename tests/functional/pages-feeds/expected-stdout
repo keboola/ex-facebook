@@ -1,0 +1,7 @@
+Use API version v16.0
+Writing account table
+Total written 1 rows to table accounts
+Query "feed" started. Type: "nested-query", Fields: "message,created_time,shares", Since: "100 days ago", Limit: "1", Path: "feed"
+Using page access token to retrieve data for %d
+Total written 1 rows to table feed
+Query "feed" finished
