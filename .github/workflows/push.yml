@@ -5,7 +5,9 @@ concurrency: 'ci-${{ github.ref }}'
 env:
     APP_IMAGE: keboola-component
     KBC_DEVELOPERPORTAL_VENDOR: keboola
-    KBC_DEVELOPERPORTAL_APP: keboola.ex-facebook
+    KBC_DEVELOPERPORTAL_APP_FB_PAGES: keboola.ex-facebook
+    KBC_DEVELOPERPORTAL_APP_FB_ADS: keboola.ex-facebook-ads
+    KBC_DEVELOPERPORTAL_APP_INSTAGRAM: keboola.ex-instagram
     KBC_DEVELOPERPORTAL_USERNAME: keboola+facebook_extractor_github_actions_oj
     KBC_DEVELOPERPORTAL_PASSWORD: '${{ secrets.KBC_DEVELOPERPORTAL_PASSWORD }}'
 
@@ -51,11 +53,33 @@ jobs:
                     echo "is_semantic_tag=$IS_SEMANTIC_TAG" >> $GITHUB_OUTPUT
                     echo "app_image_tag=$TAG" >> $GITHUB_OUTPUT
             -
-                name: 'Push image to ECR'
+                name: 'Push image to ECR (FB Pages)'
                 uses: keboola/action-push-to-ecr@master
                 with:
                     vendor: '${{ env.KBC_DEVELOPERPORTAL_VENDOR }}'
-                    app_id: '${{ env.KBC_DEVELOPERPORTAL_APP }}'
+                    app_id: '${{ env.KBC_DEVELOPERPORTAL_APP_FB_PAGES }}'
+                    username: '${{ env.KBC_DEVELOPERPORTAL_USERNAME }}'
+                    password: '${{ env.KBC_DEVELOPERPORTAL_PASSWORD }}'
+                    tag: '${{ steps.tag.outputs.app_image_tag }}'
+                    push_latest: '${{ steps.tag.outputs.is_semantic_tag }}'
+                    source_image: '${{ env.APP_IMAGE}}'
+            -
+                name: 'Push image to ECR (FB Ads)'
+                uses: keboola/action-push-to-ecr@master
+                with:
+                    vendor: '${{ env.KBC_DEVELOPERPORTAL_VENDOR }}'
+                    app_id: '${{ env.KBC_DEVELOPERPORTAL_APP_FB_ADS }}'
+                    username: '${{ env.KBC_DEVELOPERPORTAL_USERNAME }}'
+                    password: '${{ env.KBC_DEVELOPERPORTAL_PASSWORD }}'
+                    tag: '${{ steps.tag.outputs.app_image_tag }}'
+                    push_latest: '${{ steps.tag.outputs.is_semantic_tag }}'
+                    source_image: '${{ env.APP_IMAGE}}'
+            -
+                name: 'Push image to ECR (Instagram)'
+                uses: keboola/action-push-to-ecr@master
+                with:
+                    vendor: '${{ env.KBC_DEVELOPERPORTAL_VENDOR }}'
+                    app_id: '${{ env.KBC_DEVELOPERPORTAL_APP_INSTAGRAM }}'
                     username: '${{ env.KBC_DEVELOPERPORTAL_USERNAME }}'
                     password: '${{ env.KBC_DEVELOPERPORTAL_PASSWORD }}'
                     tag: '${{ steps.tag.outputs.app_image_tag }}'
@@ -73,7 +97,7 @@ jobs:
                 uses: keboola/action-pull-from-ecr@master
                 with:
                     vendor: '${{ env.KBC_DEVELOPERPORTAL_VENDOR }}'
-                    app_id: '${{ env.KBC_DEVELOPERPORTAL_APP }}'
+                    app_id: '${{ env.KBC_DEVELOPERPORTAL_APP_FB_PAGES }}'
                     username: '${{ env.KBC_DEVELOPERPORTAL_USERNAME }}'
                     password: '${{ env.KBC_DEVELOPERPORTAL_PASSWORD }}'
                     tag: '${{ needs.build.outputs.app_image_tag }}'
@@ -101,7 +125,7 @@ jobs:
                 uses: keboola/action-run-configs-parallel@master
                 with:
                     token: '${{ env.KBC_STORAGE_TOKEN }}'
-                    componentId: '${{ env.KBC_DEVELOPERPORTAL_APP }}'
+                    componentId: '${{ env.KBC_DEVELOPERPORTAL_APP_FB_PAGES }}'
                     tag: '${{ needs.build.outputs.app_image_tag }}'
                     configs: '${{ env.KBC_TEST_PROJECT_CONFIGS }}'
     deploy:
@@ -117,7 +141,25 @@ jobs:
                 uses: keboola/action-set-tag-developer-portal@master
                 with:
                     vendor: '${{ env.KBC_DEVELOPERPORTAL_VENDOR }}'
-                    app_id: '${{ env.KBC_DEVELOPERPORTAL_APP }}'
+                    app_id: '${{ env.KBC_DEVELOPERPORTAL_APP_FB_PAGES }}'
+                    username: '${{ env.KBC_DEVELOPERPORTAL_USERNAME }}'
+                    password: '${{ env.KBC_DEVELOPERPORTAL_PASSWORD }}'
+                    tag: '${{ needs.build.outputs.app_image_tag }}'
+            -
+                name: 'Set tag in the Deloper Portal'
+                uses: keboola/action-set-tag-developer-portal@master
+                with:
+                    vendor: '${{ env.KBC_DEVELOPERPORTAL_VENDOR }}'
+                    app_id: '${{ env.KBC_DEVELOPERPORTAL_APP_FB_ADS }}'
+                    username: '${{ env.KBC_DEVELOPERPORTAL_USERNAME }}'
+                    password: '${{ env.KBC_DEVELOPERPORTAL_PASSWORD }}'
+                    tag: '${{ needs.build.outputs.app_image_tag }}'
+            -
+                name: 'Set tag in the Deloper Portal'
+                uses: keboola/action-set-tag-developer-portal@master
+                with:
+                    vendor: '${{ env.KBC_DEVELOPERPORTAL_VENDOR }}'
+                    app_id: '${{ env.KBC_DEVELOPERPORTAL_APP_INSTAGRAM }}'
                     username: '${{ env.KBC_DEVELOPERPORTAL_USERNAME }}'
                     password: '${{ env.KBC_DEVELOPERPORTAL_PASSWORD }}'
                     tag: '${{ needs.build.outputs.app_image_tag }}'
