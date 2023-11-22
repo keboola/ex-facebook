@@ -8,7 +8,7 @@ env:
     KBC_DEVELOPERPORTAL_APP: keboola.ex-facebook
     KBC_DEVELOPERPORTAL_USERNAME: keboola+facebook_extractor_github_actions_oj
     KBC_DEVELOPERPORTAL_PASSWORD: '${{ secrets.KBC_DEVELOPERPORTAL_PASSWORD }}'
-    KBC_COMPONENTID: 'keboola.ex-facebook'
+    KBC_COMPONENTID: keboola.ex-facebook
 
     APP_KEY_PAGES: '178012768920721'
     APP_KEY_ADS: '568740293259867'
