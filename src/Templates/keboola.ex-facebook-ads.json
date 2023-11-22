@@ -1,0 +1,153 @@
+[
+  {
+    "id": "ads",
+    "async": false,
+    "name": "All Ads",
+    "template": {
+      "name": "ads",
+      "query": {
+        "path": "ads",
+        "fields": "id,name,adset_id"
+      }
+    }
+  },
+  {
+    "id": "campaigns",
+    "async": false,
+    "name": "All Campaigns",
+    "template": {
+      "name": "campaigns",
+      "query": {
+        "path": "campaigns",
+        "fields": "id,name,account_id"
+      }
+    }
+  },
+  {
+    "id": "adsinsights",
+    "async": false,
+    "name": "Ads Insights For Last Month",
+    "template": {
+      "name": "ads_insights",
+      "query": {
+        "path": "",
+        "fields": "insights.level(ad).action_breakdowns(action_type).date_preset(last_month).time_increment(1){ad_id,ad_name,impressions,reach,clicks,spend}"
+      }
+    }
+  },
+  {
+    "id": "adsinsightsactions",
+    "async": false,
+    "name": "Ads Insights Actions Stats For Last Month",
+    "template": {
+      "name": "ads_insights",
+      "query": {
+        "path": "",
+        "fields": "insights.level(ad).action_breakdowns(action_type).date_preset(last_month).time_increment(1){ad_id,actions}"
+      }
+    }
+  },
+  {
+    "id": "adsets",
+    "async": false,
+    "name": "All Adsets",
+    "template": {
+      "name": "adsets",
+      "query": {
+        "path": "adsets",
+        "fields": "id,name,campaign_id"
+      }
+    }
+  },
+  {
+    "id": "campaigninsights",
+    "async": false,
+    "name": "Campaigns Detail - Q1 - Insights",
+    "template": {
+      "name": "campaigns_insights",
+      "query": {
+        "path": "campaigns",
+        "fields": "insights.date_preset(last_28d).time_increment(1){account_id,account_name,campaign_id,campaign_name,impressions,clicks,spend,reach}"
+      }
+    }
+  },
+  {
+    "id": "campaigns_insights_type",
+    "async": false,
+    "name": "Campaigns Detail - Q1 - Action Types",
+    "template": {
+      "name": "campaigns_insights_type",
+      "query": {
+        "path": "campaigns",
+        "fields": "insights.action_breakdowns(action_type).date_preset(last_28d).time_increment(1){account_id,account_name,campaign_id,campaign_name,actions}"
+      }
+    }
+  },
+  {
+    "id": "campaigns_insights_reaction",
+    "async": false,
+    "name": "Campaigns Detail - Q1 - Action Reactions",
+    "template": {
+      "name": "campaigns_insights_reaction",
+      "query": {
+        "path": "campaigns",
+        "fields": "insights.action_breakdowns(action_reaction).date_preset(last_28d).time_increment(1){account_id,account_name,campaign_id,campaign_name,actions}"
+      }
+    }
+  },
+  {
+    "id": "asyncadsinsights",
+    "async": true,
+    "name": "Async Ads Insights For Last Month",
+    "template": {
+      "name": "ads_insights",
+      "query": {
+        "parameters": "fields=ad_id,ad_name,impressions,reach,clicks,spend&level=ad&action_breakdowns=action_type&date_preset=last_month&time_increment=1"
+      }
+    }
+  },
+  {
+    "id": "asyncadsinsightsactions",
+    "async": true,
+    "name": "Async Ads Insights Actions Stats For Last Month",
+    "template": {
+      "name": "ads_actions_insights",
+      "query": {
+        "parameters": "fields=ad_id,actions&level=ad&action_breakdowns=action_type&date_preset=last_month&time_increment=1"
+      }
+    }
+  },
+  {
+    "id": "asynccampaigninsights",
+    "async": true,
+    "name": "Async Campaigns Detail - Q1 - Insights",
+    "template": {
+      "name": "campaigns_insights",
+      "query": {
+        "parameters": "level=campaign&fields=account_id,account_name,campaign_id,campaign_name,impressions,clicks,spend,reach&date_preset=last_28d&time_increment=1"
+      }
+    }
+  },
+  {
+    "id": "async_campaigns_insights_type",
+    "async": true,
+    "name": "Async Campaigns Detail - Q1 - Action Types",
+    "template": {
+      "name": "campaigns_insights_type",
+      "query": {
+        "parameters": "level=campaign&fields=account_id,account_name,campaign_id,campaign_name,actions&action_breakdowns=action_type&date_preset=last_28d&time_increment=1"
+      }
+    }
+  },
+  {
+    "id": "async_campaigns_insights_reaction",
+    "async": true,
+    "name": "Async Campaigns Detail - Q1 - Action Reactions",
+    "template": {
+      "name": "campaigns_insights_reaction",
+      "query": {
+        "parameters": "level=campaign&fields=account_id,account_name,campaign_id,campaign_name,actions&action_breakdowns=action_reaction&date_preset=last_28d&time_increment=1"
+      }
+    }
+  }
+]
