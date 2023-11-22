@@ -19,7 +19,7 @@ class TemplatesLoader
             return [];
         }
 
-        return json_decode(
+        return (array) json_decode(
             (string) file_get_contents($file),
             true,
         );
