@@ -41,10 +41,4 @@ class Config extends BaseConfig
     {
         return $this->getStringValue(['authorization', 'oauth_api', 'credentials', '#data'], '');
     }
-
-    public function getEnvKbcComponentId(): string
-    {
-        var_dump((string) getenv('KBC_COMPONENTID'));
-        return (string) getenv('KBC_COMPONENTID');
-    }
 }

@@ -14,7 +14,7 @@ class TemplatesLoader
 
     public function load(): array
     {
-        $file = sprintf('%s/templates/%s.json', __DIR__, $this->componentId);
+        $file = sprintf('%s/Templates/%s.json', __DIR__, $this->componentId);
         if (!file_exists($file)) {
             return [];
         }
