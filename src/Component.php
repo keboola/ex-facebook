@@ -77,6 +77,12 @@ class Component extends BaseComponent
         return $extractor->getAccounts('/me/accounts', 'instagram_business_account,name,category');
     }
 
+    public function runComponentTemplates(): array
+    {
+        $templatesLoader = new TemplatesLoader($this->getConfig()->getEnvKbcComponentId());
+        return $templatesLoader->load();
+    }
+
     public function getConfig(): Config
     {
         /** @var Config $config */
@@ -106,6 +112,7 @@ class Component extends BaseComponent
             'accounts' => 'runAccountsAction',
             'adaccounts' => 'runAdAccountsAction',
             'igaccounts' => 'runIgAccountsAction',
+            'componentTemplates' => 'runComponentTemplates',
         ];
     }
 
