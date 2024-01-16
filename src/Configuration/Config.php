@@ -10,7 +10,7 @@ use Keboola\FacebookExtractor\Configuration\Node\RowConfig;
 
 class Config extends BaseConfig
 {
-    public const GRAPH_VERSION = 'v17.0';
+    public const GRAPH_VERSION = 'v18.0';
 
     public function getApiVersion(): string
     {
