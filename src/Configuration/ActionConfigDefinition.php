@@ -28,6 +28,7 @@ class ActionConfigDefinition extends BaseConfigDefinition
                         'v15.0',
                         'v16.0',
                         'v17.0',
+                        'v18.0',
                     ])
                     ->defaultValue(Config::GRAPH_VERSION)
                 ->end()
