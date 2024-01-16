@@ -125,7 +125,7 @@ class Component extends BaseComponent
         $api = Api::init(
             $this->getConfig()->getOAuthApiAppKey(),
             $this->getConfig()->getOAuthApiAppSecret(),
-            $oauthData['token'],
+            $token,
             false,
         );
         $this->getLogger()->info('Use API version ' . $this->getConfig()->getApiVersion());
