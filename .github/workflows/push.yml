@@ -6,7 +6,7 @@ env:
     APP_IMAGE: keboola/ex-facebook-graph-api
 
     KBC_DEVELOPERPORTAL_VENDOR: keboola
-    KBC_DEVELOPERPORTAL_APP: keboola.ex-facebook
+    KBC_DEVELOPERPORTAL_APP: keboola.ex-facebook-ads
     KBC_DEVELOPERPORTAL_USERNAME: keboola+facebook_extractor_github_actions_oj
     KBC_DEVELOPERPORTAL_PASSWORD: '${{ secrets.KBC_DEVELOPERPORTAL_PASSWORD }}'
 
