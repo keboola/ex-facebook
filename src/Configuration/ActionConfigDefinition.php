@@ -20,14 +20,9 @@ class ActionConfigDefinition extends BaseConfigDefinition
                 ->enumNode('api_version')
                     ->cannotBeEmpty()
                     ->values([
-                        'v10.0',
-                        'v11.0',
-                        'v12.0',
-                        'v13.0',
-                        'v14.0',
-                        'v15.0',
-                        'v16.0',
-                        'v17.0',
+                        'v19.0',
+                        'v20.0',
+                        'v21.0',
                     ])
                     ->defaultValue(Config::GRAPH_VERSION)
                 ->end()
