@@ -6,7 +6,9 @@ env:
     APP_IMAGE: keboola/ex-facebook-graph-api
 
     KBC_DEVELOPERPORTAL_VENDOR: keboola
-    KBC_DEVELOPERPORTAL_APP: keboola.ex-facebook-ads
+    KBC_DEVELOPERPORTAL_APP_FB: "keboola.ex-facebook"
+    KBC_DEVELOPERPORTAL_APP_FB_ADS: "keboola.ex-facebook-ads"
+    KBC_DEVELOPERPORTAL_APP_INSTAGRAM: "keboola.ex-instagram"
     KBC_DEVELOPERPORTAL_USERNAME: keboola+facebook_extractor_github_actions_oj
     KBC_DEVELOPERPORTAL_PASSWORD: '${{ secrets.KBC_DEVELOPERPORTAL_PASSWORD }}'
 
@@ -56,12 +58,34 @@ jobs:
                 uses: keboola/action-push-to-ecr@master
                 with:
                     vendor: '${{ env.KBC_DEVELOPERPORTAL_VENDOR }}'
-                    app_id: '${{ env.KBC_DEVELOPERPORTAL_APP }}'
+                    app_id: '${{ env.KBC_DEVELOPERPORTAL_APP_FB }}'
                     username: '${{ env.KBC_DEVELOPERPORTAL_USERNAME }}'
                     password: '${{ env.KBC_DEVELOPERPORTAL_PASSWORD }}'
                     tag: '${{ steps.tag.outputs.app_image_tag }}'
                     push_latest: '${{ steps.tag.outputs.is_semantic_tag }}'
                     source_image: '${{ env.APP_IMAGE}}'
+
+            - name: Push Facebook ads extractor image to ECR
+              uses: keboola/action-push-to-ecr@master
+              with:
+                  vendor: ${{ env.KBC_DEVELOPERPORTAL_VENDOR }}
+                  app_id: ${{ env.KBC_DEVELOPERPORTAL_APP_FB_ADS }}
+                  username: ${{ env.KBC_DEVELOPERPORTAL_USERNAME }}
+                  password: ${{ env.KBC_DEVELOPERPORTAL_PASSWORD }}
+                  tag: ${{ steps.tag.outputs.app_image_tag }}
+                  push_latest: ${{ steps.tag.outputs.is_semantic_tag }}
+                  source_image: ${{ env.APP_IMAGE}}
+
+            - name: Push Instagram extractor image to ECR
+              uses: keboola/action-push-to-ecr@master
+              with:
+                  vendor: ${{ env.KBC_DEVELOPERPORTAL_VENDOR }}
+                  app_id: ${{ env.KBC_DEVELOPERPORTAL_APP_INSTAGRAM }}
+                  username: ${{ env.KBC_DEVELOPERPORTAL_USERNAME }}
+                  password: ${{ env.KBC_DEVELOPERPORTAL_PASSWORD }}
+                  tag: ${{ steps.tag.outputs.app_image_tag }}
+                  push_latest: ${{ steps.tag.outputs.is_semantic_tag }}
+                  source_image: ${{ env.APP_IMAGE}}
     tests:
         needs: build
         runs-on: ubuntu-latest
