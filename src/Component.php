@@ -112,6 +112,7 @@ class Component extends BaseComponent
     protected function getClient(): Api
     {
         $oauthData = (array) json_decode($this->getConfig()->getOAuthApiData(), true);
+        $this->getLogger()->info(json_encode($oauthData));
         assert(array_key_exists('token', $oauthData));
 
         $api = Api::init(
