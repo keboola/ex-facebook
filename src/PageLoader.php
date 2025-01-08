@@ -40,6 +40,7 @@ class PageLoader
                 'fields' => $query->getFields(),
                 'limit' => $this->limit,
             ];
+            $this->logger->info('GET /' . $query->getPath() . ' ' . json_encode($params));
             $request = $this->api->prepareRequest(
                 '/'. $query->getPath(),
                 'GET',
