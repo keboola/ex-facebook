@@ -18,9 +18,7 @@ class Component extends BaseComponent
 {
     protected function run(): void
     {
-        $this->getLogger()->info('Before extractor init');
         $extractor = new FacebookExtractor($this->getClient(), $this->getLogger());
-        $this->getLogger()->info('After extractor init');
 
         $outputWriter = new OutputWriter(
             $this->getManifestManager(),

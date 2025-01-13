@@ -27,18 +27,22 @@ class FacebookExtractor
      */
     public function exportRow(array $accounts, RowConfig $row): Generator
     {
+        $this->logger->info('Exporting row ' . $row->getName());
         /** @var Session $apiSession */
         $apiSession = $this->api->getSession();
         if ($this->requestRequirePageToken($row->getQuery())) {
+            $this->logger->info('require page token');
             $pageTokens = $this->getPagesToken($accounts, $row->getQuery());
             $isPageToken = true;
         } else {
+            $this->logger->info('dont need');
             $pageTokens = array_combine(
                 array_map(fn(Account $account) => $account->getId(), $accounts),
                 array_fill(0, count($accounts), $apiSession->getAccessToken()),
             );
             $isPageToken = false;
         }
+        $this->logger->info('after page Tokens');
 
         foreach ($pageTokens as $pageId => $token) {
             $pageId = (string) $pageId;
