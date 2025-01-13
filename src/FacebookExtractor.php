@@ -118,6 +118,7 @@ class FacebookExtractor
         if (empty($queryConfig->getIds())) {
             $ids = array_map(fn(Account $account) => $account->getId(), $accounts);
         }
+        $this->logger->info('Prepare request: ');
 
         $pageTokens = [];
         foreach ($ids as $id) {
@@ -126,9 +127,11 @@ class FacebookExtractor
                 'GET',
                 ['fields' => 'access_token'],
             );
+            $this->logger->info('URL:' . $request->getUrl());
             $response = $request->execute();
             /** @var array{'id': string|int, 'access_token': string} $content */
             $content = $response->getContent();
+            $this->logger->info('content: ' . json_encode($content));
 
             $pageTokens[(string) $content['id']] = $content['access_token'];
         }
