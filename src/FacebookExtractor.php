@@ -78,6 +78,7 @@ class FacebookExtractor
             if (empty($page)) {
                 continue;
             }
+
             yield $outputParser->parseRow(current($page), $fbGraphNode, $pageId);
         }
     }
@@ -141,7 +142,7 @@ class FacebookExtractor
 
     private function requestRequirePageToken(QueryConfig $queryConfig): bool
     {
-        $checkPath = in_array($queryConfig->getPath(), ['insights', 'feed', 'posts', 'ratings', 'likes']);
+        $checkPath = in_array($queryConfig->getPath(), ['insights', 'feed', 'posts', 'ratings', 'likes', 'stories']);
         $fields = (string) $queryConfig->getFields();
 
         return $checkPath ||

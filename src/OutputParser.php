@@ -64,16 +64,16 @@ class OutputParser
                 'fb_graph_node' => $fbGraphNode,
                 'parent_id' => $parentId,
             ];
-            $flatenData = [];
-            array_walk($row, function ($value, $key) use (&$tableData, &$flatenData) {
+            $flattenData = [];
+            array_walk($row, function ($value, $key) use (&$tableData, &$flattenData) {
                 if (is_array($value) && array_key_exists('data', $value)) {
-                    $flatenData['new_table'][(string) $key] = $value;
+                    $flattenData['new_table'][(string) $key] = $value;
                 } elseif ($key === 'values') {
-                    $flatenData['values'] = $value;
+                    $flattenData['values'] = $value;
                 } elseif (is_array($value)) {
                     $tableData = array_merge($tableData, $this->flattenArray($key, $value));
                 } elseif (in_array($key, self::ADS_ACTION_STATS_ROW)) {
-                    $flatenData['ads_actions'][$key] = $value;
+                    $flattenData['ads_actions'][$key] = $value;
                 } elseif (in_array($key, self::SERIALIZED_LISTS_TYPES)) {
                     $tableData[$key] = json_encode($value);
                 } else {
@@ -81,16 +81,16 @@ class OutputParser
                 }
             });
 
-            if (array_key_exists('values', $flatenData)) {
-                foreach ($this->parseValues($tableData, $flatenData['values']) as $valueRow) {
+            if (array_key_exists('values', $flattenData)) {
+                foreach ($this->parseValues($tableData, $flattenData['values']) as $valueRow) {
                     $rowData[$mainTableName][] = $valueRow;
                 }
             } else {
                 $rowData[$mainTableName][] = $tableData;
             }
 
-            if (array_key_exists('new_table', $flatenData)) {
-                foreach ($flatenData['new_table'] as $newTableName => $table) {
+            if (array_key_exists('new_table', $flattenData)) {
+                foreach ($flattenData['new_table'] as $newTableName => $table) {
                     $rowData = array_merge_recursive(
                         $rowData,
                         $this->parseRow(
