@@ -126,7 +126,7 @@ class FacebookExtractor
             $request = $this->api->prepareRequest(
                 '/' . $id,
                 'GET',
-                ['fields' => 'access_token'],
+//                ['fields' => 'access_token'],
             );
             $this->logger->info('URL:' . $request->getUrl());
             $response = $request->execute();
@@ -134,7 +134,7 @@ class FacebookExtractor
             $content = $response->getContent();
             $this->logger->info('content: ' . json_encode($content));
 
-            $pageTokens[(string) $content['id']] = $content['access_token'];
+            $pageTokens[(string) $content['id']] = $content['access_token'] ?? $request->getQueryParams()['access_token'];
         }
 
         return $pageTokens;
