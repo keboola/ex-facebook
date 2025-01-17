@@ -126,10 +126,20 @@ class FacebookExtractor
             $request = $this->api->prepareRequest(
                 '/' . $id,
                 'GET',
-//                ['fields' => 'access_token'],
+                ['fields' => 'access_token'],
             );
             $this->logger->info('URL:' . $request->getUrl());
-            $response = $request->execute();
+            try {
+                $response = $request->execute();
+            } catch (\Exception $exception) {
+                $request = $this->api->prepareRequest(
+                    '/' . $id,
+                    'GET',
+                );
+                $this->logger->info('URL2:' . $request->getUrl());
+                $response = $request->execute();
+            }
+
             /** @var array{'id': string|int, 'access_token': string} $content */
             $content = $response->getContent();
             $this->logger->info('content: ' . json_encode($content));
