@@ -128,6 +128,8 @@ class FacebookExtractor
                 'GET',
                 ['fields' => 'access_token'],
             );
+            $this->logger->info('secret: ' . $this->api->getSession()->getAppSecret());
+            $this->logger->info('token access: ' . $this->api->getSession()->getAccessToken());
             $this->logger->info('URL:' . $request->getUrl());
             try {
                 $response = $request->execute();
